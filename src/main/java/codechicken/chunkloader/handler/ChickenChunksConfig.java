@@ -25,7 +25,7 @@ public class ChickenChunksConfig {
     private static int globalOfflineTimeout;
     private static int globalTotalAllowedChunks;
     private static int globalChunksPerLoader;
-    private static boolean skipLoadingTick = true;
+    private static boolean skipLoadingTick;
 
     public static void load() {
         config = new StandardConfigFile(Paths.get("./config/ChickenChunks.cfg")).load();
@@ -42,8 +42,8 @@ public class ChickenChunksConfig {
                 .setDefaultBoolean(true)//
                 .getBoolean();
         skipLoadingTick = config.getTag("skipLoadingTick")//
-                .setComment("skip loading in first tick.")//
-                .setDefaultBoolean(true)//
+                .setComment("skip loading in first tick. enable this option if your server having deadlock issue (it may cause issue, use on your own risk)")//
+                .setDefaultBoolean(false)//
                 .getBoolean();
         globalOfflineTimeout = config.getTag("offlineTimeout")//
                 .setComment("How long in minutes ChickenChunks should wait after a Player logs out to unload their chunks. Only effective when allowOffline=false")//

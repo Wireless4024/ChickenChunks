@@ -23,7 +23,6 @@ import net.minecraft.util.registry.Registry;
 import net.minecraft.world.IWorld;
 import net.minecraft.world.World;
 import net.minecraft.world.server.ServerWorld;
-import net.minecraft.world.server.TicketManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
@@ -102,6 +101,7 @@ public class ChunkLoaderHandler implements IChunkLoaderHandler {
             if (world.dimension() == World.OVERWORLD) {
                 ChunkLoaderHandler handler = getHandler(world);
                 if (handler != null) {
+                    if (ChickenChunksConfig.skipLoadingTick() && world.getServer().getTickCount() == 1) return;
                     handler.tick(event);
                 }
             }

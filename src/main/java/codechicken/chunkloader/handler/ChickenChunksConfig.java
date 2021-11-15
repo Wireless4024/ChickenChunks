@@ -25,6 +25,7 @@ public class ChickenChunksConfig {
     private static int globalOfflineTimeout;
     private static int globalTotalAllowedChunks;
     private static int globalChunksPerLoader;
+    private static boolean skipLoadingTick = true;
 
     public static void load() {
         config = new StandardConfigFile(Paths.get("./config/ChickenChunks.cfg")).load();
@@ -38,6 +39,10 @@ public class ChickenChunksConfig {
                 .getBoolean();
         globalAllowOffline = config.getTag("allowOffline")//
                 .setComment("If chunks should stay loaded when a ChunkLoader's owner is offline.")//
+                .setDefaultBoolean(true)//
+                .getBoolean();
+        skipLoadingTick = config.getTag("skipLoadingTick")//
+                .setComment("skip loading in first tick.")//
                 .setDefaultBoolean(true)//
                 .getBoolean();
         globalOfflineTimeout = config.getTag("offlineTimeout")//
@@ -75,6 +80,10 @@ public class ChickenChunksConfig {
             return opsBypassRestrictions;
         }
         return false;
+    }
+
+    public static boolean skipLoadingTick(){
+        return skipLoadingTick;
     }
 
     public static boolean doesBypassLoaderAccess(ServerPlayerEntity player) {
